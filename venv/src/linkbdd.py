@@ -1,9 +1,11 @@
 # object BDD permet de faire tous les traitements sur la bdd qui lui est relatif
 
 import mysql.connector
+import json
 
 
 class Bdd(object):
+
     def __init__(self):
 
         self.conn = mysql.connector.connect(host="localhost", user="root", password="root", database="ProPy")
@@ -27,9 +29,8 @@ class Bdd(object):
                 value = json.dumps(value)
             data[key] = value
 
-        query = """INSERT INTO `metrics_composant`(`CPU`, `DISK`, `RAM`, `BATTERY`, `INFO`) VALUES(%(CPU)u, %(DISK)s, %(RAM)s, %(BATTERY)s, %(INFO)s)""" % data
-        print(query)
-        self.cursor.execute(query)
+        self.cursor.execute("""INSERT INTO `metrics_composant`(`CPU`, `DISK`, `RAM`, `BATTERY`, `INFO`) VALUES(%(CPU)s, %(DISK)s, %(RAM)s, %(BATTERY)s, %(INFO)s)""",  data)
+        self.conn.commit()
 
     def select(self):
 

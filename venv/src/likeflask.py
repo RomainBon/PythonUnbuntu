@@ -1,16 +1,16 @@
-#Met les info sur le navigateur
+#Met les info sur le navigateur https://codeburst.io/full-stack-single-page-application-with-vue-js-and-flask-b1e036315532
+# DOSSIER DU PROJET (VUE)
 
 from linkbdd import Bdd
-import json
+from flask import Flask, render_template
 
 if __name__ == '__main__':
 
-    data = {"CPU": 44.4, "DISK": "[25668112384, 9942683648, 14397931520, 40.8]", "RAM": "[8243666944, 49.5, 668299264]", "BATTERY": "[100, -1, false]", "INFO": "[[\"romain\", \"tty2\", \"/dev/tty2\", 1256]]"}
-    print(data)
+    app = Flask(__name__,
+                static_folder="./dist/static",
+                template_folder="./dist")
 
-    coBdd = Bdd()
-    coBdd.createTable()
-    coBdd.select()
-    coBdd.insert(data)
-    coBdd.select()
-    coBdd.closeConnection()
+
+    @app.route('/')
+    def index():
+        return render_template("index.html")
